@@ -19,12 +19,13 @@ steps:
     provider: 'azurerm'
     command: 'init'
     workingDirectory: '$(System.DefaultWorkingDirectory)'
+    backendServiceArm: '$(subscription)'
     backendConfig: $(backendConfig)
     commandOptions: '-reconfigure'
     allowTelemetryCollection: false
 
 - task: TerraformTaskV1@0
-  displayName: terraform plan -out=tfplan
+  displayName: terraform plan
   inputs:
     provider: 'azurerm'
     command: 'plan'
@@ -35,7 +36,7 @@ steps:
   condition: and(succeeded(), eq(variables['Build.Reason'], 'IndividualCI'))
 
 - task: TerraformTaskV1@0
-  displayName: terraform apply tfplan
+  displayName: terraform apply
   inputs:
     provider: 'azurerm'
     command: 'apply'
