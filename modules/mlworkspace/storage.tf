@@ -58,6 +58,12 @@ resource "azurerm_private_endpoint" "pvt-endpoint-ml-blob" {
     subresource_names              = ["blob"]
   }
 
+  lifecycle {
+    ignore_changes = [
+      private_dns_zone_group
+    ]
+  }
+
   tags = merge(var.tags)
 }
 
@@ -74,6 +80,12 @@ resource "azurerm_private_endpoint" "pvt-endpoint-ml-file" {
     subresource_names              = ["file"]
   }
 
+  lifecycle {
+    ignore_changes = [
+      private_dns_zone_group
+    ]
+  }
+
   tags = merge(var.tags)
 }
 
@@ -88,6 +100,12 @@ resource "azurerm_private_endpoint" "pvt-endpoint-ml-queue" {
     private_connection_resource_id = azurerm_storage_account.ml-workspace-st.id
     is_manual_connection           = false
     subresource_names              = ["queue"]
+  }
+
+  lifecycle {
+    ignore_changes = [
+      private_dns_zone_group
+    ]
   }
 
   tags = merge(var.tags)
@@ -107,5 +125,11 @@ resource "azurerm_private_endpoint" "pvt-endpoint-ml-table" {
     subresource_names              = ["table"]
   }
 
+  lifecycle {
+    ignore_changes = [
+      private_dns_zone_group
+    ]
+  }
+  
   tags = merge(var.tags)
 }

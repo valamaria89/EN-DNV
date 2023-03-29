@@ -38,3 +38,22 @@ variable "tags" {
   type        = map(string)
   description = "values for tags"
 }
+
+variable "address_space" {
+  type        = string
+  description = "Address space for the virtual network"
+}
+
+variable "dns_servers" {
+  type        = list(string)
+  description = "DNS servers for the virtual network"
+}
+
+
+variable "peered_networks" {
+  type = list(object({
+    name       = string
+    network_id = string
+  }))
+  description = "values for peered spoke networks"
+}

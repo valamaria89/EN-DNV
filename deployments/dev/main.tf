@@ -17,9 +17,9 @@ resource "azurerm_resource_group" "mlworkspace" {
 module "mlworkspace" {
   source = "../../modules/mlworkspace"
 
-  virtual_network_name = azurerm_virtual_network.ml.name
-  compute_instance_subnet_name = azurerm_subnet.compute_instance.name
-  compute_cluster_subnet_name = azurerm_subnet.compute_cluster.name
+  virtual_network_name          = azurerm_virtual_network.ml.name
+  compute_instance_subnet_name  = azurerm_subnet.compute_instance.name
+  compute_cluster_subnet_name   = azurerm_subnet.compute_cluster.name
   private_endpoints_subnet_name = azurerm_subnet.private_endpoints.name
 
   resource_group_name = azurerm_resource_group.mlworkspace.name
@@ -28,5 +28,5 @@ module "mlworkspace" {
   product             = var.product
   stage               = var.stage
   location            = var.location
-  tags                = var.tags 
+  tags                = var.tags
 }

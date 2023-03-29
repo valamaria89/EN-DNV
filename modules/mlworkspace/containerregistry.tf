@@ -33,5 +33,11 @@ resource "azurerm_private_endpoint" "pvt-endpoint-ml-acr" {
     subresource_names              = ["registry"]
   }
 
+  lifecycle {
+    ignore_changes = [
+      private_dns_zone_group
+    ]
+  }
+
   tags = merge(var.tags, {})
 }

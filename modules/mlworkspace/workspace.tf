@@ -6,6 +6,7 @@ resource "azurerm_machine_learning_workspace" "workspace" {
   key_vault_id            = azurerm_key_vault.ml-kv.id
   storage_account_id      = azurerm_storage_account.ml-workspace-st.id
   container_registry_id   = azurerm_container_registry.ml-acr.id
+  image_build_compute_name = local.image_builder_name
 
   identity {
     type = "SystemAssigned"
@@ -36,6 +37,12 @@ resource "azurerm_private_endpoint" "pvt-endpoint-ml-workspace" {
     private_connection_resource_id = azurerm_machine_learning_workspace.workspace.id
     is_manual_connection           = false
     subresource_names              = ["amlworkspace"]
+  }
+
+  lifecycle {
+    ignore_changes = [
+      private_dns_zone_group
+    ]
   }
 
   tags = merge(var.tags)

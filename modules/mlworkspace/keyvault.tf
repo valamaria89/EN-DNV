@@ -35,4 +35,10 @@ resource "azurerm_private_endpoint" "pvt-endpoint-ml-kv" {
     subresource_names              = ["vault"]
   }
 
+  lifecycle {
+    ignore_changes = [
+      private_dns_zone_group
+    ]
+  }
+
 }
