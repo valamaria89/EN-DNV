@@ -13,36 +13,8 @@ steps:
   inputs:
     terraformVersion: '0.14.11'
 
-- task: TerraformTaskV1@0
-  displayName: terraform init
-  inputs:
-    provider: 'azurerm'
-    command: 'init'
-    workingDirectory: '$(System.DefaultWorkingDirectory)/deployments/dev/'
-    backendServiceArm: '$(subscription)'
-    backendConfigFile: '$(System.DefaultWorkingDirectory)/deployments/dev/.terraform.lock.hcl'
-    backendConfig: $(backendConfig)
-    commandOptions: '-reconfigure'
-    allowTelemetryCollection: false
 
-- task: TerraformTaskV1@0
-  displayName: terraform plan
+- task: Bash@3
   inputs:
-    provider: 'azurerm'
-    command: 'plan'
-    workingDirectory: '$(System.DefaultWorkingDirectory)/deployments/dev/'
-    environmentServiceNameAzureRM: '$(subscription)'
-    commandOptions: '-var-file="$(System.DefaultWorkingDirectory)/deployments/dev/dev.tfvars"' 
-    allowTelemetryCollection: false
-  condition: and(succeeded(), eq(variables['Build.Reason'], 'IndividualCI'))
-
-- task: TerraformTaskV1@0
-  displayName: terraform apply
-  inputs:
-    provider: 'azurerm'
-    command: 'apply'
-    workingDirectory: '$(System.DefaultWorkingDirectory)/deployments/dev/'
-    commandOptions: '-var-file="$(System.DefaultWorkingDirectory)/deployments/dev/dev.tfvars"' 
-    environmentServiceNameAzureRM: '$(subscription)'
-    allowTelemetryCollection: false
-  condition: and(succeeded(), eq(variables['Build.Reason'], 'IndividualCI'))
+    targetType: 'inline'
+    script: terraform init -backend-config='$(System.DefaultWorkingDirectory)/deployments/dev/versions.tf'
