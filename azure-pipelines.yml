@@ -18,7 +18,7 @@ steps:
   inputs:
     provider: 'azurerm'
     command: 'init'
-    workingDirectory: '$(System.DefaultWorkingDirectory)'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/deployments/dev/'
     backendServiceArm: '$(subscription)'
     backendConfigFile: '$(System.DefaultWorkingDirectory)/deployments/dev/.terraform.lock.hcl'
     backendConfig: $(backendConfig)
@@ -30,7 +30,7 @@ steps:
   inputs:
     provider: 'azurerm'
     command: 'plan'
-    workingDirectory: '$(System.DefaultWorkingDirectory)'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/deployments/dev/'
     environmentServiceNameAzureRM: '$(subscription)'
     commandOptions: '-var-file="$(System.DefaultWorkingDirectory)/deployments/dev/dev.tfvars"' 
     allowTelemetryCollection: false
@@ -41,7 +41,7 @@ steps:
   inputs:
     provider: 'azurerm'
     command: 'apply'
-    workingDirectory: '$(System.DefaultWorkingDirectory)'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/deployments/dev/'
     commandOptions: '-var-file="$(System.DefaultWorkingDirectory)/deployments/dev/dev.tfvars"' 
     environmentServiceNameAzureRM: '$(subscription)'
     allowTelemetryCollection: false
