@@ -1,0 +1,46 @@
+# trigger:
+# - master
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  subscription: TestServiceConnectVala
+  backendCinfig: '$(System.DefaultWorkingDirectory)/deployments/dev/versions.tf'
+steps:
+
+- task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-installer.TerraformInstaller@0
+  inputs:
+    terraformVersion: '0.14.11'
+
+- task: TerraformTaskV1@0
+  displayName: terraform init
+  inputs:
+    provider: 'azurerm'
+    command: 'init'
+    workingDirectory: '$(System.DefaultWorkingDirectory)'
+    backendConfig: $(backendConfig)
+    commandOptions: '-reconfigure'
+    allowTelemetryCollection: false
+
+- task: TerraformTaskV1@0
+  displayName: terraform plan -out=tfplan
+  inputs:
+    provider: 'azurerm'
+    command: 'plan'
+    workingDirectory: '$(System.DefaultWorkingDirectory)'
+    environmentServiceNameAzureRM: '$(subscription)'
+    commandOptions: '-var-file="$(System.DefaultWorkingDirectory)/deployments/dev/dev.tfvars"' 
+    allowTelemetryCollection: false
+  condition: and(succeeded(), eq(variables['Build.Reason'], 'IndividualCI'))
+
+- task: TerraformTaskV1@0
+  displayName: terraform apply tfplan
+  inputs:
+    provider: 'azurerm'
+    command: 'apply'
+    workingDirectory: '$(System.DefaultWorkingDirectory)'
+    commandOptions: '-var-file="$(System.DefaultWorkingDirectory)/deployments/dev/dev.tfvars"' 
+    environmentServiceNameAzureRM: '$(subscription)'
+    allowTelemetryCollection: false
+  condition: and(succeeded(), eq(variables['Build.Reason'], 'IndividualCI'))
