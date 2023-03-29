@@ -16,5 +16,8 @@ steps:
 
 - task: Bash@3
   inputs:
-    filePath: '$(System.DefaultWorkingDirectory)/deployments/dev/'
-    arguments: ''terraform init -backend-config='$(System.DefaultWorkingDirectory)/deployments/dev/versions.tf''
+    targetType: 'inline'
+    script: |
+      cd deployments/dev/
+      terraform init -backend-config='$(System.DefaultWorkingDirectory)/deployments/dev/versions.tf'
+    displayName: 'Terraform init'  
