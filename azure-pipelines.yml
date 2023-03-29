@@ -6,7 +6,7 @@ pool:
 
 variables:
   subscription: TestServiceConnectVala
-  backendCinfig: '$(System.DefaultWorkingDirectory)/deployments/dev/versions.tf'
+  backendConfig: '$(System.DefaultWorkingDirectory)/deployments/dev/versions.tf'
 steps:
 
 - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-installer.TerraformInstaller@0
@@ -20,6 +20,7 @@ steps:
     command: 'init'
     workingDirectory: '$(System.DefaultWorkingDirectory)'
     backendServiceArm: '$(subscription)'
+    backendConfigFile: '$(System.DefaultWorkingDirectory)/deployments/dev/.terraform.lock.hcl'
     backendConfig: $(backendConfig)
     commandOptions: '-reconfigure'
     allowTelemetryCollection: false
