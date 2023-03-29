@@ -17,4 +17,4 @@ steps:
 - task: Bash@3
   inputs:
     filePath: '$(System.DefaultWorkingDirectory)/deployments/dev/'
-    arguments: 'terraform init -backend-config='$(System.DefaultWorkingDirectory)/deployments/dev/versions.tf'
+    arguments: ''terraform init -backend-config='$(System.DefaultWorkingDirectory)/deployments/dev/versions.tf''
