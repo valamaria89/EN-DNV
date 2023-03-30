@@ -28,6 +28,12 @@ steps:
   inputs:
     terraformVersion: '1.4.2'
 
+- task: Bash@3
+  inputs:
+    targetType: 'inline'
+    script: |
+      echo $(ARM_SUBSCRIPTION_ID)
+    displayName: 'test'  
 
 - task: Bash@3
   inputs:
