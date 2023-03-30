@@ -12,12 +12,12 @@ steps:
   displayName: Azure CLI
   inputs:
     azureSubscription: $(subscription)
-    scriptType: ps
+    scriptType: bash
     scriptLocation: inlineScript
     inlineScript: |
       az --version
       az account show
-
+    addSpnToEnvironment: true
 - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-installer.TerraformInstaller@0
   inputs:
     terraformVersion: '1.4.2'
