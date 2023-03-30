@@ -18,6 +18,6 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      cd deployments/dev/
+      cd $(System.DefaultWorkingDirectory)/deployments/dev/
       terraform init -backend-config='$(System.DefaultWorkingDirectory)/deployments/dev/versions.tf'
     displayName: 'Terraform init'  
