@@ -8,6 +8,16 @@ variables:
   subscription: TestServiceConnectVala
 steps:
 
+- task: AzureCLI@2
+  displayName: Azure CLI
+  inputs:
+    azureSubscription: $(subscription)
+    scriptType: ps
+    scriptLocation: inlineScript
+    inlineScript: |
+      az --version
+      az account show
+
 - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-installer.TerraformInstaller@0
   inputs:
     terraformVersion: '1.4.2'
@@ -17,6 +27,8 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
+
       cd $(System.DefaultWorkingDirectory)/deployments/dev/
       terraform init -reconfigure
     displayName: 'Terraform init'  
+
