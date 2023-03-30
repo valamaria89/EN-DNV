@@ -6,12 +6,11 @@ pool:
 
 variables:
   subscription: TestServiceConnectVala
-  backendConfig: '$(System.DefaultWorkingDirectory)/deployments/dev/versions.tf'
 steps:
 
 - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-installer.TerraformInstaller@0
   inputs:
-    terraformVersion: '0.14.11'
+    terraformVersion: '1.4.2'
 
 
 - task: Bash@3
@@ -19,5 +18,5 @@ steps:
     targetType: 'inline'
     script: |
       cd $(System.DefaultWorkingDirectory)/deployments/dev/
-      terraform init -backend-config='$(System.DefaultWorkingDirectory)/deployments/dev/versions.tf'
+      terraform init -reconfigure
     displayName: 'Terraform init'  
