@@ -16,22 +16,11 @@ variable "product" {
 variable "stage" {
   type        = string
   description = "The lifecycle name"
-
-  validation {
-    condition     = contains(["dev", "prod", "test"], var.stage)
-    error_message = "must be one of dev, prod, test"
-  }
 }
 
 variable "location" {
   type        = string
   description = "The location name"
-  default     = "westeurope"
-
-  validation {
-    condition     = contains(["westeurope"], var.location)
-    error_message = "must be of westeurope"
-  }
 }
 
 variable "tags" {
