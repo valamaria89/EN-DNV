@@ -46,17 +46,17 @@ variable "stage" {
 
   validation {
     condition     = contains(["dev", "prod", "test"], var.stage)
-    error_message = "must be one of dev, prod, test"
+    error_message = "Stage must be one of the three dev, prod, test."
   }
 }
 
 variable "location" {
   type        = string
-  description = "The location name"
+  description = "Location must be westeurope."
 
   validation {
     condition     = contains(["westeurope"], var.location)
-    error_message = "must be of westeurope"
+    error_message = "Must be of westeurope."
   }
 }
 

@@ -18,7 +18,7 @@ variable "stage" {
   description = "The lifecycle name"
   validation {
     condition     = contains(["dev", "prod", "test"], var.stage)
-    error_message = "Must be one of dev, prod, test."
+    error_message = "Stage must be one of the three dev, prod, test."
   }
 }
 
@@ -27,7 +27,7 @@ variable "location" {
   description = "The location name"
   validation {
     condition     = contains(["westeurope"], var.location)
-    error_message = "Must be of westeurope."
+    error_message = "Location must be westeurope."
   }
 }
 
