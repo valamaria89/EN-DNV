@@ -23,29 +23,39 @@ steps:
      
     addSpnToEnvironment: true
 
+steps:
 - task: AzureCLI@2
-  displayName: Azure CLI number 2
+  displayName: 'Azure CLI '$(System.DefaultWorkingDirectory)/scripts/get_remote_state_sas_key.sh'
   inputs:
     azureSubscription: $(subscription)
     scriptType: bash
-    scriptLocation: inlineScript
-    inlineScript: |
-      az login --service-principal --username $(ARM_CLIENT_ID) --password $(ARM_CLIENT_SECRET)  --tenant $(ARM_TENANT_ID)
-      
-      az account show
-      subscriptionId=$(az account show --query 'id' -o tsv)
-      
-      
-      az account set --subscription "$subscriptionId"
-      
-      cd $(System.DefaultWorkingDirectory)/scripts/
-      az login --service-principal --username $(ARM_CLIENT_ID) --password $(ARM_CLIENT_SECRET)  --tenant $(ARM_TENANT_ID)
+    scriptPath: '$(System.DefaultWorkingDirectory)/scripts/get_remote_state_sas_key.sh'
+    arguments: '-n enmltfstatedevsawe -c tfstate'
     addSpnToEnvironment: true
 
-- task: Bash@3
-  inputs:
-    filePath: '$(System.DefaultWorkingDirectory)/scripts/get_remote_state_sas_key.sh'
-    arguments: '-n enmltfstatedevsawe -c tfstate'
+# - task: AzureCLI@2
+#   displayName: Azure CLI number 2
+#   inputs:
+#     azureSubscription: $(subscription)
+#     scriptType: bash
+#     scriptLocation: inlineScript
+#     inlineScript: |
+#       az login --service-principal --username $(ARM_CLIENT_ID) --password $(ARM_CLIENT_SECRET)  --tenant $(ARM_TENANT_ID)
+      
+#       az account show
+#       subscriptionId=$(az account show --query 'id' -o tsv)
+      
+      
+#       az account set --subscription "$subscriptionId"
+      
+#       cd $(System.DefaultWorkingDirectory)/scripts/
+#       az login --service-principal --username $(ARM_CLIENT_ID) --password $(ARM_CLIENT_SECRET)  --tenant $(ARM_TENANT_ID)
+#     addSpnToEnvironment: true
+
+# - task: Bash@3
+#   inputs:
+#     filePath: '$(System.DefaultWorkingDirectory)/scripts/get_remote_state_sas_key.sh'
+#     arguments: '-n enmltfstatedevsawe -c tfstate'
 
 #- task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-installer.TerraformInstaller@0
 #  inputs:
