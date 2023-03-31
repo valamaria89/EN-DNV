@@ -15,6 +15,7 @@ terraform {
   }
 
   backend "azurerm" {
+    resource_group_name  = "en-mltfstate-dev-rg-we"
     storage_account_name = "enmltfstatedevsawe"
     container_name       = "tfstate"
     key                  = "dev.terraform.tfstate"

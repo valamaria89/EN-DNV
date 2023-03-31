@@ -1,17 +1,11 @@
 # trigger:
 # - master
-# trigger:
-# - master
 
 pool:
   vmImage: 'ubuntu-latest'
 
 variables:
   subscription: TestServiceConnectVala
-  resourceGroup: en-mltfstate-dev-rg-we
-  storageAccount: enmltfstateprodsawe
-  container: tfstate
-  tfstateFile: dev.terraform.tfstate
 
 steps:
 
@@ -26,10 +20,6 @@ steps:
     command: 'init'
     workingDirectory: '$(System.DefaultWorkingDirectory)/deployments/dev'
     backendServiceArm: '$(subscription)'
-    backendAzureRmResourceGroupName: '$(resourceGroup)'
-    backendAzureRmStorageAccountName: '$(storageAccount)'
-    backendAzureRmContainerName: '$(container)'
-    backendAzureRmKey: '$(tfstateFile)'
     commandOptions: '-reconfigure'
 
 - task: TerraformTaskV1@0
