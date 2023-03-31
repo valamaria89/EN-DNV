@@ -23,7 +23,6 @@ steps:
      
     addSpnToEnvironment: true
 
-steps:
 - task: AzureCLI@2
   displayName: 'Azure CLI '$(System.DefaultWorkingDirectory)/scripts/get_remote_state_sas_key.sh'
   inputs:
