@@ -52,8 +52,8 @@ steps:
     scriptType: bash
     scriptLocation: inlineScript
     inlineScript: |
-      terraform plan var-file=$(System.DefaultWorkingDirectory)/deployments/dev/dev.tfvars
-    addSpnToEnvironment: true   
+      terraform plan -var-file=$(System.DefaultWorkingDirectory)/deployments/dev/dev.tfvars
+    addSpnToEnvironment: true
 
 - task: AzureCLI@2
   displayName: 'Azure CLI terraform apply'
