@@ -31,29 +31,31 @@ steps:
     inlineScript: |
       $(System.DefaultWorkingDirectory)/deployments/dev/
       terraform init -reconfigure
-    addSpnToEnvironment: true
-
-- task: AzureCLI@2
-  displayName: 'Azure CLI terraform plan'
-  inputs:
-    azureSubscription: $(subscription)
-    scriptType: bash
-    scriptLocation: inlineScript
-    inlineScript: |
-      cd $(System.DefaultWorkingDirectory)/deployments/dev/
       terraform plan -var-file=$(System.DefaultWorkingDirectory)/deployments/dev/dev.tfvars
+      terraform apply 
     addSpnToEnvironment: true
 
-- task: AzureCLI@2
-  displayName: 'Azure CLI terraform apply'
-  inputs:
-    azureSubscription: $(subscription)
-    scriptType: bash
-    scriptLocation: inlineScript
-    inlineScript: |
-      cd $(System.DefaultWorkingDirectory)/deployments/dev/
-      terraform apply 
-    addSpnToEnvironment: true   
+# - task: AzureCLI@2
+#   displayName: 'Azure CLI terraform plan'
+#   inputs:
+#     azureSubscription: $(subscription)
+#     scriptType: bash
+#     scriptLocation: inlineScript
+#     inlineScript: |
+#       cd $(System.DefaultWorkingDirectory)/deployments/dev/
+#       terraform plan -var-file=$(System.DefaultWorkingDirectory)/deployments/dev/dev.tfvars
+#     addSpnToEnvironment: true
+
+# - task: AzureCLI@2
+#   displayName: 'Azure CLI terraform apply'
+#   inputs:
+#     azureSubscription: $(subscription)
+#     scriptType: bash
+#     scriptLocation: inlineScript
+#     inlineScript: |
+#       cd $(System.DefaultWorkingDirectory)/deployments/dev/
+#       terraform apply 
+#     addSpnToEnvironment: true   
 
 # - task: AzureCLI@2
 #   displayName: Azure CLI number 2
