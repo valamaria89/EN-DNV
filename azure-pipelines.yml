@@ -42,9 +42,28 @@ steps:
     scriptType: bash
     scriptLocation: inlineScript
     inlineScript: |
-      terraform init
+      terraform init -reconfigure
     addSpnToEnvironment: true
 
+ - task: AzureCLI@2
+  displayName: 'Azure CLI terraform init'
+  inputs:
+    azureSubscription: $(subscription)
+    scriptType: bash
+    scriptLocation: inlineScript
+    inlineScript: |
+      terraform plan 
+    addSpnToEnvironment: true   
+
+- task: AzureCLI@2
+  displayName: 'Azure CLI terraform init'
+  inputs:
+    azureSubscription: $(subscription)
+    scriptType: bash
+    scriptLocation: inlineScript
+    inlineScript: |
+      terraform apply 
+    addSpnToEnvironment: true   
 
 # - task: AzureCLI@2
 #   displayName: Azure CLI number 2
