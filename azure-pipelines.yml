@@ -39,6 +39,7 @@ steps:
       az account set --subscription "$subscriptionId"
       
       cd $(System.DefaultWorkingDirectory)/scripts/
+      az login --service-principal --username $(ARM_CLIENT_ID) --password $(ARM_CLIENT_SECRET)  --tenant $(ARM_TENANT_ID)
     addSpnToEnvironment: true
 
 - task: Bash@3
