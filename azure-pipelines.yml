@@ -18,9 +18,9 @@ steps:
   inputs:
     provider: 'azurerm'
     command: 'init'
-    backendConfig: '.terraform.lock.hcl'
+    backendConfig: 'versions.tf'
     workingDirectory: '$(System.DefaultWorkingDirectory)/deployments/dev'
-    backendServiceArm: '$(subscription)'
+    #backendServiceArm: '$(subscription)'
     backendAzureRmResourceGroupName: "en-mltfstate-dev-rg-we"
     backendAzureRmStorageAccountName: "enmltfstatedevsawe"
     backendAzureRmContainerName: "tfstate"
