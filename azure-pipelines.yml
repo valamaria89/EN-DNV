@@ -1,46 +1,94 @@
 # trigger:
 # - master
+# trigger:
+# - master
 
 pool:
   vmImage: 'ubuntu-latest'
 
 variables:
   subscription: TestServiceConnectVala
+  resourceGroup: en-mltfstate-dev-rg-we
+  storageAccount: enmltfstateprodsawe
+  container: tfstate
+  tfstateFile: dev.terraform.tfstate
+
 steps:
 
 - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-installer.TerraformInstaller@0
   inputs:
     terraformVersion: '1.4.2'
-    
-- task: AzureCLI@2
-  displayName: 'Azure CLI get_remote_state_sas_key.sh'
+
+- task: TerraformTaskV1@0
+  displayName: terraform init
   inputs:
-    azureSubscription: $(subscription)
-    scriptType: bash
-    scriptLocation: inlineScript
-    inlineScript: |
-      export ARM_SAS_TOKEN=$(bash $(System.DefaultWorkingDirectory)/scripts//get_remote_state_sas_key.sh -n enmltfstateprodsawe -c tfstate)
-      cd $(System.DefaultWorkingDirectory)/deployments/dev
-      terraform init -reconfigure
-    addSpnToEnvironment: true
+    provider: 'azurerm'
+    command: 'init'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/deployments/dev'
+    backendServiceArm: '$(subscription)'
+    backendAzureRmResourceGroupName: '$(resourceGroup)'
+    backendAzureRmStorageAccountName: '$(storageAccount)'
+    backendAzureRmContainerName: '$(container)'
+    backendAzureRmKey: '$(tfstateFile)'
+    commandOptions: '-reconfigure'
+
+- task: TerraformTaskV1@0
+  displayName: terraform plan -out=tfplan
+  inputs:
+    provider: 'azurerm'
+    command: 'plan'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/deployments/dev'
+    commandOptions: '-var-file="dev.tfvars"' 
+    environmentServiceNameAzureRM: '$(subscription)'
+
+- task: TerraformTaskV1@0
+  displayName: terraform apply tfplan
+  inputs:
+    provider: 'azurerm'
+    command: 'apply'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/deployments/dev'
+    commandOptions: '-var-file="dev.tfvars"' 
+    environmentServiceNameAzureRM: '$(subscription)'
+# pool:
+#   vmImage: 'ubuntu-latest'
+
+# variables:
+#   subscription: TestServiceConnectVala
+# steps:
+
+# - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-installer.TerraformInstaller@0
+#   inputs:
+#     terraformVersion: '1.4.2'
+
+# - task: AzureCLI@2
+#   displayName: 'Azure CLI get_remote_state_sas_key.sh'
+#   inputs:
+#     azureSubscription: $(subscription)
+#     scriptType: bash
+#     scriptLocation: inlineScript
+#     inlineScript: |
+#       export ARM_SAS_TOKEN=$(bash $(System.DefaultWorkingDirectory)/scripts//get_remote_state_sas_key.sh -n enmltfstateprodsawe -c tfstate)
+#       cd $(System.DefaultWorkingDirectory)/deployments/dev
+#       terraform init -reconfigure
+#     addSpnToEnvironment: true
 
 
-- task: AzureCLI@2
-  displayName: 'Azure CLI terraform init'
-  inputs:
-    azureSubscription: $(subscription)
-    scriptType: bash
-    scriptLocation: inlineScript
-    inlineScript: |
-      cd $(System.DefaultWorkingDirectory)/deployments/dev
-      export ARM_CLIENT_ID=$servicePrincipalId
-      export ARM_CLIENT_SECRET=$servicePrincipalKey
-      export ARM_TENANT_ID=$tenantId
-      export ARM_SUBSCRIPTION_ID=$subscriptionId
-      terraform init -reconfigure
-      terraform plan -var-file=$(System.DefaultWorkingDirectory)/deployments/dev/dev.tfvars
-      terraform apply 
-    addSpnToEnvironment: true
+# - task: AzureCLI@2
+#   displayName: 'Azure CLI terraform init'
+#   inputs:
+#     azureSubscription: $(subscription)
+#     scriptType: bash
+#     scriptLocation: inlineScript
+#     inlineScript: |
+#       cd $(System.DefaultWorkingDirectory)/deployments/dev
+#       export ARM_CLIENT_ID=$servicePrincipalId
+#       export ARM_CLIENT_SECRET=$servicePrincipalKey
+#       export ARM_TENANT_ID=$tenantId
+#       export ARM_SUBSCRIPTION_ID=$subscriptionId
+#       terraform init -reconfigure
+#       terraform plan -var-file=$(System.DefaultWorkingDirectory)/deployments/dev/dev.tfvars
+#       terraform apply 
+#     addSpnToEnvironment: true
 
 # - task: AzureCLI@2
 #   displayName: 'Azure CLI terraform plan'
