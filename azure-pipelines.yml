@@ -29,7 +29,7 @@ steps:
     scriptType: bash
     scriptLocation: inlineScript
     inlineScript: |
-      $(System.DefaultWorkingDirectory)/deployments/dev/
+      cd $(System.DefaultWorkingDirectory)/deployments/dev
       terraform init -reconfigure
       terraform plan -var-file=$(System.DefaultWorkingDirectory)/deployments/dev/dev.tfvars
       terraform apply 
