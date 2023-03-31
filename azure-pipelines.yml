@@ -44,7 +44,8 @@ steps:
 - task: Bash@3
   inputs:
     filePath: '$(System.DefaultWorkingDirectory)/scripts/get_remote_state_sas_key.sh'
-    arguments: 'enmltfstatedevsawe tfstate'
+    arguments: '-n enmltfstatedevsawe -c tfstate'
+
 #- task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-installer.TerraformInstaller@0
 #  inputs:
 #    terraformVersion: '1.4.2'
