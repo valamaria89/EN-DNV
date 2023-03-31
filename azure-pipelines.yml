@@ -27,8 +27,9 @@ steps:
   inputs:
     azureSubscription: $(subscription)
     scriptType: bash
-    scriptLocation: $(System.DefaultWorkingDirectory)/deployments/dev
+    scriptLocation: inlineScript
     inlineScript: |
+      $(System.DefaultWorkingDirectory)/deployments/dev/
       terraform init -reconfigure
     addSpnToEnvironment: true
 
@@ -37,8 +38,9 @@ steps:
   inputs:
     azureSubscription: $(subscription)
     scriptType: bash
-    scriptLocation: $(System.DefaultWorkingDirectory)/deployments/dev
+    scriptLocation: inlineScript
     inlineScript: |
+      cd $(System.DefaultWorkingDirectory)/deployments/dev/
       terraform plan -var-file=$(System.DefaultWorkingDirectory)/deployments/dev/dev.tfvars
     addSpnToEnvironment: true
 
@@ -47,8 +49,9 @@ steps:
   inputs:
     azureSubscription: $(subscription)
     scriptType: bash
-    scriptLocation: $(System.DefaultWorkingDirectory)/deployments/dev
+    scriptLocation: inlineScript
     inlineScript: |
+      cd $(System.DefaultWorkingDirectory)/deployments/dev/
       terraform apply 
     addSpnToEnvironment: true   
 
