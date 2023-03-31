@@ -20,11 +20,11 @@ steps:
     command: 'init'
     backendConfig: 'versions.tf'
     workingDirectory: '$(System.DefaultWorkingDirectory)/deployments/dev'
-    #backendServiceArm: '$(subscription)'
-    backendAzureRmResourceGroupName: "en-mltfstate-dev-rg-we"
-    backendAzureRmStorageAccountName: "enmltfstatedevsawe"
-    backendAzureRmContainerName: "tfstate"
-    backendAzureRmKey: "dev.terraform.tfstate"
+    # backendServiceArm: '$(subscription)'
+    # backendAzureRmResourceGroupName: "en-mltfstate-dev-rg-we"
+    # backendAzureRmStorageAccountName: "enmltfstatedevsawe"
+    # backendAzureRmContainerName: "tfstate"
+    # backendAzureRmKey: "dev.terraform.tfstate"
     commandOptions: '-reconfigure'
 
 - task: TerraformTaskV1@0
