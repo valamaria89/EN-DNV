@@ -21,6 +21,10 @@ steps:
     backendConfig: '.terraform.lock.hcl'
     workingDirectory: '$(System.DefaultWorkingDirectory)/deployments/dev'
     backendServiceArm: '$(subscription)'
+    backendAzureRmResourceGroupName: "en-mltfstate-dev-rg-we"
+    backendAzureRmStorageAccountName: "enmltfstatedevsawe"
+    backendAzureRmContainerName: "tfstate"
+    backendAzureRmKey: "dev.terraform.tfstate"
     commandOptions: '-reconfigure'
 
 - task: TerraformTaskV1@0
