@@ -18,6 +18,7 @@ steps:
   inputs:
     provider: 'azurerm'
     command: 'init'
+    backendConfig: '.terraform.lock.hcl'
     workingDirectory: '$(System.DefaultWorkingDirectory)/deployments/dev'
     backendServiceArm: '$(subscription)'
     commandOptions: '-reconfigure'
