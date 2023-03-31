@@ -46,7 +46,7 @@ steps:
     addSpnToEnvironment: true
 
  - task: AzureCLI@2
-  displayName: 'Azure CLI terraform init'
+  displayName: 'Azure CLI terraform plan'
   inputs:
     azureSubscription: $(subscription)
     scriptType: bash
@@ -56,7 +56,7 @@ steps:
     addSpnToEnvironment: true   
 
 - task: AzureCLI@2
-  displayName: 'Azure CLI terraform init'
+  displayName: 'Azure CLI terraform apply'
   inputs:
     azureSubscription: $(subscription)
     scriptType: bash
