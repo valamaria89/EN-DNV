@@ -30,6 +30,9 @@ steps:
     scriptLocation: inlineScript
     inlineScript: |
       cd $(System.DefaultWorkingDirectory)/deployments/dev
+      export ARM_CLIENT_ID=$servicePrincipalId
+      export ARM_CLIENT_SECRET=$servicePrincipalKey
+      export ARM_TENANT_ID=$tenantId
       terraform init -reconfigure
       terraform plan -var-file=$(System.DefaultWorkingDirectory)/deployments/dev/dev.tfvars
       terraform apply 
