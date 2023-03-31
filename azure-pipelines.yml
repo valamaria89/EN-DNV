@@ -38,7 +38,7 @@ steps:
       
       az account set --subscription "$subscriptionId"
       
-     
+      cd $(System.DefaultWorkingDirectory)/scripts/
     addSpnToEnvironment: true
 
 - task: Bash@3
