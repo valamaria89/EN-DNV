@@ -16,6 +16,8 @@ steps:
     scriptLocation: inlineScript
     inlineScript: |
       export ARM_SAS_TOKEN=$(bash $(System.DefaultWorkingDirectory)/scripts//get_remote_state_sas_key.sh -n enmltfstateprodsawe -c tfstate)
+      cd $(System.DefaultWorkingDirectory)/deployments/dev
+      terraform init -reconfigure
     addSpnToEnvironment: true
 
 - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-installer.TerraformInstaller@0
