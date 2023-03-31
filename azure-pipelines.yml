@@ -15,12 +15,10 @@ steps:
     scriptType: bash
     scriptLocation: inlineScript
     inlineScript: |
-      
       echo "##vso[task.setvariable variable=ARM_CLIENT_ID]$servicePrincipalId" 
       echo "##vso[task.setvariable variable=ARM_CLIENT_SECRET]$servicePrincipalKey"
       echo "##vso[task.setvariable variable=ARM_TENANT_ID]$tenantId"
       echo "##vso[task.setvariable variable=ARM_SUBSCRIPTION_ID]$subscription"
-     
     addSpnToEnvironment: true
 
 - task: AzureCLI@2
@@ -28,9 +26,24 @@ steps:
   inputs:
     azureSubscription: $(subscription)
     scriptType: bash
-    scriptPath: '$(System.DefaultWorkingDirectory)/scripts/get_remote_state_sas_key.sh'
-    arguments: '-n enmltfstatedevsawe -c tfstate'
+    scriptLocation: inlineScript
+    inlineScript: |
+      export ARM_SAS_TOKEN=$(bash $(System.DefaultWorkingDirectory)/scripts//get_remote_state_sas_key.sh -n enmltfstateprodsawe -c tfstate)
     addSpnToEnvironment: true
+
+- task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-installer.TerraformInstaller@0
+  inputs:
+    terraformVersion: '1.4.2'
+
+- task: AzureCLI@2
+  displayName: 'Azure CLI terraform init'
+  inputs:
+    azureSubscription: $(subscription)
+    scriptType: bash
+    inlineScript: |
+      terraform init
+    addSpnToEnvironment: true
+
 
 # - task: AzureCLI@2
 #   displayName: Azure CLI number 2
