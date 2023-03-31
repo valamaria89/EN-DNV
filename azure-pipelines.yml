@@ -20,6 +20,7 @@ steps:
     command: 'init'
     backendConfig: 'versions.tf'
     workingDirectory: '$(System.DefaultWorkingDirectory)/deployments/dev'
+    environmentServiceNameAzureRM: '$(subscription)'
     # backendServiceArm: '$(subscription)'
     # backendAzureRmResourceGroupName: "en-mltfstate-dev-rg-we"
     # backendAzureRmStorageAccountName: "enmltfstatedevsawe"
