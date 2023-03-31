@@ -15,13 +15,14 @@ steps:
     scriptType: bash
     scriptLocation: inlineScript
     inlineScript: |
-      az account show
-      echo subscriptionId=$(az account show --query 'id' -o tsv)
-      echo tenantId=$(az account show --query 'tenantId' -o tsv)
       
       echo "##vso[task.setvariable variable=ARM_CLIENT_ID]$servicePrincipalId" 
      
       echo "##vso[task.setvariable variable=ARM_CLIENT_SECRET]$servicePrincipalKey"
+      
+      az account show
+      echo subscriptionId=$(az account show --query 'id' -o tsv)
+      echo tenantId=$(az account show --query 'tenantId' -o tsv)
       
       az login --service-principal --username $(ARM_CLIENT_ID) --password $(ARM_CLIENT_SECRET)  --tenant $(tenantId)
       az account set --subscription "$(subscriptionId)"
