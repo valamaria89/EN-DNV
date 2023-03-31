@@ -8,6 +8,10 @@ variables:
   subscription: TestServiceConnectVala
 steps:
 
+- task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-installer.TerraformInstaller@0
+  inputs:
+    terraformVersion: '1.4.2'
+    
 - task: AzureCLI@2
   displayName: 'Azure CLI get_remote_state_sas_key.sh'
   inputs:
@@ -20,9 +24,6 @@ steps:
       terraform init -reconfigure
     addSpnToEnvironment: true
 
-- task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-installer.TerraformInstaller@0
-  inputs:
-    terraformVersion: '1.4.2'
 
 - task: AzureCLI@2
   displayName: 'Azure CLI terraform init'
