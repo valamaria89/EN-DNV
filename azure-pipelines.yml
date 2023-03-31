@@ -45,7 +45,7 @@ steps:
       terraform init -reconfigure
     addSpnToEnvironment: true
 
- - task: AzureCLI@2
+- task: AzureCLI@2
   displayName: 'Azure CLI terraform plan'
   inputs:
     azureSubscription: $(subscription)
