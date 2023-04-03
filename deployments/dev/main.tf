@@ -11,7 +11,7 @@ provider "azurerm" {
 resource "azurerm_resource_group" "mlworkspace" {
   name     = "${var.organization}-${var.product}-${var.stage}-rg-${local.shortname_locations[var.location]}"
   location = var.location
-  tags     = var.tags
+  tags     = merge(var.tags, {"hi" = "mom"})
 }
 
 module "mlworkspace" {
