@@ -4,8 +4,8 @@
 pool:
   vmImage: 'ubuntu-latest'
 
-variables:
-  subscription: TestServiceConnectVala
+#variables:
+#  subscription: TestServiceConnectVala
 
 steps:
 
@@ -35,6 +35,10 @@ steps:
     workingDirectory: '$(System.DefaultWorkingDirectory)/deployments/dev'
   env: 
     ARM_SAS_TOKEN: $(sas_token_dev)
+    ARM_SUBSCRIPTION_ID: $(subscription_id_dev)
+    ARM_CLIENT_ID:       $(client_id_dev)
+    ARM_CLIENT_SECRET:   $(client_secret_dev)
+    ARM_TENANT_ID:       $(tenant_id_dev)
 
     #- task: Bash@3
 #   inputs:
