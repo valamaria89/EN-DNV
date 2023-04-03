@@ -13,38 +13,21 @@ steps:
   inputs:
     terraformVersion: '1.4.2'
 
-- task: TerraformTaskV1@0
-  displayName: terraform init
+- task: Bash@3
   inputs:
-    provider: 'azurerm'
-    command: 'init'
-    backendConfig: 'versions.tf'
+    targetType: 'inline'
+    script: |
+      ls -alh
+      terraform init
+      
+    displayName: 'test'
     workingDirectory: '$(System.DefaultWorkingDirectory)/deployments/dev'
-    environmentServiceNameAzureRM: '$(subscription)'
-    # backendServiceArm: '$(subscription)'
-    # backendAzureRmResourceGroupName: "en-mltfstate-dev-rg-we"
-    # backendAzureRmStorageAccountName: "enmltfstatedevsawe"
-    # backendAzureRmContainerName: "tfstate"
-    # backendAzureRmKey: "dev.terraform.tfstate"
-    commandOptions: '-reconfigure'
 
-- task: TerraformTaskV1@0
-  displayName: terraform plan -out=tfplan
-  inputs:
-    provider: 'azurerm'
-    command: 'plan'
-    workingDirectory: '$(System.DefaultWorkingDirectory)/deployments/dev'
-    commandOptions: '-var-file="dev.tfvars"' 
-    environmentServiceNameAzureRM: '$(subscription)'
+#- task: Bash@3
+#   inputs:
+#     filePath: '$(System.DefaultWorkingDirectory)/scripts/get_remote_state_sas_key.sh'
+#     arguments: '-n enmltfstatedevsawe -c tfstate'
 
-- task: TerraformTaskV1@0
-  displayName: terraform apply tfplan
-  inputs:
-    provider: 'azurerm'
-    command: 'apply'
-    workingDirectory: '$(System.DefaultWorkingDirectory)/deployments/dev'
-    commandOptions: '-var-file="dev.tfvars"' 
-    environmentServiceNameAzureRM: '$(subscription)'
 # pool:
 #   vmImage: 'ubuntu-latest'
 
