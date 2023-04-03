@@ -5,7 +5,6 @@ terraform {
     azurerm = {
       source  = "hashicorp/azurerm"
       version = "~> 3.37"
-      use_cli_credentials = true
     }
 
     random = {
