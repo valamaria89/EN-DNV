@@ -29,7 +29,7 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      terraform plan
+      terraform plan -var-file="dev.tfvars"
       
     displayName: 'terraform plan'
     workingDirectory: '$(System.DefaultWorkingDirectory)/deployments/dev'
