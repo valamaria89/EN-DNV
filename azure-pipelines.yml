@@ -17,11 +17,21 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      ls -alh
-      echo $ARM_SAS_TOKEN
-      terraform init
+      terraform init -reconfigure
       
-    displayName: 'test'
+    displayName: 'terraform init'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/deployments/dev'
+  env: 
+    ARM_SAS_TOKEN: $(sas_token_dev)
+
+
+- task: Bash@3
+  inputs:
+    targetType: 'inline'
+    script: |
+      terraform plan
+      
+    displayName: 'terraform plan'
     workingDirectory: '$(System.DefaultWorkingDirectory)/deployments/dev'
   env: 
     ARM_SAS_TOKEN: $(sas_token_dev)
