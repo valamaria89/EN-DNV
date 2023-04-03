@@ -18,12 +18,15 @@ steps:
     targetType: 'inline'
     script: |
       ls -alh
+      echo $ARM_SAS_TOKEN
       terraform init
       
     displayName: 'test'
     workingDirectory: '$(System.DefaultWorkingDirectory)/deployments/dev'
+  env: 
+    ARM_SAS_TOKEN: $(sas_token_dev)
 
-#- task: Bash@3
+    #- task: Bash@3
 #   inputs:
 #     filePath: '$(System.DefaultWorkingDirectory)/scripts/get_remote_state_sas_key.sh'
 #     arguments: '-n enmltfstatedevsawe -c tfstate'
