@@ -40,6 +40,21 @@ steps:
     ARM_CLIENT_SECRET:   $(client_secret_dev)
     ARM_TENANT_ID:       $(tenant_id_dev)
 
+- task: Bash@3
+  inputs:
+    targetType: 'inline'
+    script: |
+      terraform apply -auto-approve -var-file="dev.tfvars"
+      
+    displayName: 'terraform apply'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/deployments/dev'
+  env: 
+    ARM_SAS_TOKEN: $(sas_token_dev)
+    ARM_SUBSCRIPTION_ID: $(subscription_id_dev)
+    ARM_CLIENT_ID:       $(client_id_dev)
+    ARM_CLIENT_SECRET:   $(client_secret_dev)
+    ARM_TENANT_ID:       $(tenant_id_dev)    
+
     #- task: Bash@3
 #   inputs:
 #     filePath: '$(System.DefaultWorkingDirectory)/scripts/get_remote_state_sas_key.sh'
